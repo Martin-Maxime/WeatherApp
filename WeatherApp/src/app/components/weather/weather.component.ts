@@ -8,15 +8,18 @@ import { WeatherService } from '../../services/weather-service';
 })
 export class WeatherComponent implements OnInit {
   weather: any;
+  cities: any;
+  data: any;
 
   constructor(private weatherService: WeatherService) {
   }
 
   ngOnInit() {
-  	this.getWeather();
+  	/*this.getWeather();*/
+  	this.getCities();
   }
 
-	getWeather(): void {
+/*	getWeather(): void {
 	    this.weatherService.getWeather().subscribe(
 	        (data: any) => {
 	            this.weather = data;
@@ -25,6 +28,24 @@ export class WeatherComponent implements OnInit {
 	        (err: any) => {
 	        }
 	    );
+	}*/
+
+	cityChange(cityId: number) {
+		console.log(cityId);
+		this.weatherService.getWeather(cityId).subscribe(
+			(data:any) => {
+				this.weather = data;
+			},
+			(err: any) => {
+
+			}
+		)
+	}
+
+	getCities(): void {
+		this.weatherService.getJSON().subscribe(
+			res => this.data = res.json()
+		);
 	}
 
 }

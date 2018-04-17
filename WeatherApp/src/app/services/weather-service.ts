@@ -10,13 +10,17 @@ export class WeatherService {
   private url;
 
   constructor(private http: Http) {
-  	this.url='http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={'+ this.APIKEY + '}';
+  	this.url='http://api.openweathermap.org/data/2.5/forecast?';
   }
 
-  getWeather() {
-  	return this.http.get(this.url).map((res) =>{
+  getWeather(cityId) {
+  	return this.http.get(this.url+'id='+cityId+'&APPID='+this.APIKEY+'').map((res) =>{
   		return res.json();
   	})
+  }
+
+  getJSON(): Observable<any> {
+    return this.http.get('data/cities-fr.json').map((res) => res.json());
   }
 
 }
