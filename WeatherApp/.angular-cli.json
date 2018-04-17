@@ -21,7 +21,8 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "styles.css"
+        "styles.css",
+        "assets/css/weathericons.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

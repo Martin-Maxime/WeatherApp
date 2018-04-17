@@ -9,7 +9,7 @@ import { WeatherService } from '../../services/weather-service';
 export class WeatherComponent implements OnInit {
   weather: any;
   cities: any;
-  data: any;
+  cityName: string;
 
   constructor(private weatherService: WeatherService) {
   }
@@ -32,9 +32,11 @@ export class WeatherComponent implements OnInit {
 
 	cityChange(cityId: number) {
 		console.log(cityId);
-		this.weatherService.getWeather(cityId).subscribe(
+		this.weatherService.forecastWeather(cityId).subscribe(
 			(data:any) => {
 				this.weather = data;
+				this.cityName = this.weather.city.name;
+				console.log(this.weather);
 			},
 			(err: any) => {
 
@@ -44,7 +46,12 @@ export class WeatherComponent implements OnInit {
 
 	getCities(): void {
 		this.weatherService.getJSON().subscribe(
-			res => this.data = res.json()
+			(data:any) => {
+				this.cities = data;
+			},
+			(err: any) => {
+
+			}
 		);
 	}
 

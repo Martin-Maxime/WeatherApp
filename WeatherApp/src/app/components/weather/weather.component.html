@@ -1,8 +1,12 @@
-<p>
-  weather works!
-</p>
-<div class="form">
-	<select (changes)="cityChange()" name="" id="">
-		<option value=""></option>
+<div *ngIf="this.cities" class="form">
+	<label for="city">Sélectionner votre ville</label>
+	<select (change)="cityChange($event.target.value)" name="city" id="city" class="form-control">
+		<option *ngFor="let city of cities"  [value]="city.id">{{ city.nm }}</option>
 	</select>
+</div>
+<div class="weather-wrapper">
+	<h2>{{ this.cityName }}</h2>
+	<div class="current-weather">
+		<span [ngClass]="type === 'mybutton' ? namespace + '-mybutton' : ''" ></span>
+	</div>
 </div>
