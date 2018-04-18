@@ -10,12 +10,15 @@ export class WeatherComponent implements OnInit {
   weather: any;
   cities: any;
   cityName: string;
+  currentWeather: Object = {};
+  currentWeatherId: number;
+  currentWeatherTemp: number;
+  forecastWeather: Object = {};
 
   constructor(private weatherService: WeatherService) {
   }
 
   ngOnInit() {
-  	/*this.getWeather();*/
   	this.getCities();
   }
 
@@ -31,12 +34,21 @@ export class WeatherComponent implements OnInit {
 	}*/
 
 	cityChange(cityId: number) {
-		console.log(cityId);
-		this.weatherService.forecastWeather(cityId).subscribe(
+		this.weatherService.getCurrentWeather(cityId).subscribe(
+			(data:any) => {
+				this.currentWeather = data;
+				this.currentWeatherId = data.weather[0].id;
+				this.currentWeatherTemp = data.main.temp;
+			},
+			(err: any) => {
+
+			}
+		)
+		this.weatherService.getForecastWeather(cityId).subscribe(
 			(data:any) => {
 				this.weather = data;
 				this.cityName = this.weather.city.name;
-				console.log(this.weather);
+				this.forecastWeather = this.weather.list;
 			},
 			(err: any) => {
 

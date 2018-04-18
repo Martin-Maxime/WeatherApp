@@ -1,12 +1,22 @@
-<div *ngIf="this.cities" class="form">
-	<label for="city">Sélectionner votre ville</label>
-	<select (change)="cityChange($event.target.value)" name="city" id="city" class="form-control">
-		<option *ngFor="let city of cities"  [value]="city.id">{{ city.nm }}</option>
-	</select>
-</div>
-<div class="weather-wrapper">
-	<h2>{{ this.cityName }}</h2>
-	<div class="current-weather">
-		<span [ngClass]="type === 'mybutton' ? namespace + '-mybutton' : ''" ></span>
+<div class="row justify-content-md-center">
+	<div class="col-md-4 weatherapp-container">
+		<div *ngIf="this.cities" class="form">
+			<label for="city">Sélectionner votre ville</label>
+			<select (change)="cityChange($event.target.value)" name="city" id="city" class="form-control">
+				<option *ngFor="let city of cities"  [value]="city.id">{{ city.nm }}</option>
+			</select>
+		</div>
+		<div class="weather-wrapper">
+			<h2>{{ this.cityName }}</h2>
+			<div *ngIf="(this.currentWeather | json) != '{}'" class="current-weather">
+				<span [ngClass]="'wi wi-icon-'+this.currentWeatherId"></span>
+				<span>{{ this.currentWeatherTemp }}°</span>
+			</div>
+			<div *ngIf="(this.forecastWeather | json) != '{}'" class="forecast-weather">
+				<ul>
+					<li *ngFor="let day of forecastWeather"><span [ngClass]="'wi wi-icon-'+this.day.weather[0].id" ></span>{{ day.main.temp }}° {{ day.dt_txt }}</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>
