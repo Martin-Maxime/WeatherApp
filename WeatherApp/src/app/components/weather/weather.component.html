@@ -1,21 +1,29 @@
-<div class="row justify-content-md-center">
-	<div class="col-md-4 weatherapp-container">
-		<div *ngIf="this.cities" class="form">
-			<label for="city">Sélectionner votre ville</label>
-			<select (change)="cityChange($event.target.value)" name="city" id="city" class="form-control">
-				<option *ngFor="let city of cities"  [value]="city.id">{{ city.nm }}</option>
-			</select>
-		</div>
-		<div class="weather-wrapper">
-			<h2>{{ this.cityName }}</h2>
-			<div *ngIf="(this.currentWeather | json) != '{}'" class="current-weather">
-				<span [ngClass]="'wi wi-icon-'+this.currentWeatherId"></span>
-				<span>{{ this.currentWeatherTemp }}°</span>
+<div class="container">
+	<div class="row justify-content-md-center">
+		<div class="col-md-4 weatherapp-container">
+			<div *ngIf="this.cities" class="form">
+				<select (change)="cityChange($event.target.value)" name="city" id="city" class="form-control">
+					<option value="">Sélectionner votre ville</option>
+					<option *ngFor="let city of cities"  [value]="city.id">{{ city.nm }}</option>
+				</select>
 			</div>
-			<div *ngIf="(this.forecastWeather | json) != '{}'" class="forecast-weather">
-				<ul>
-					<li *ngFor="let day of forecastWeather"><span [ngClass]="'wi wi-icon-'+this.day.weather[0].id" ></span>{{ day.main.temp }}° {{ day.dt_txt }}</li>
-				</ul>
+			<div *ngIf="(this.currentWeather | json) === '{}'" class="loader"></div>
+			<div *ngIf="(this.currentWeather | json) != '{}'" class="weather-wrapper">
+				<h2><span>{{ this.cityName }}</span></h2>
+				<div *ngIf="(this.currentWeather | json) != '{}'" class="current-weather">
+					<span [ngClass]="'wi wi-icon-'+this.currentWeatherId"></span>
+					<span class="temperature">{{ this.currentWeatherTemp }}°</span>
+				</div>
+				<div *ngIf="(this.forecastWeather | json) != '{}'" class="forecast-weather">
+					<span class="subtitle">Prévisions</span>
+					<ul class="row">
+						<li *ngFor="let day of forecastWeather" class="col">
+							<span class="date">{{ day.dt_txt }}</span>
+							<span [ngClass]="'wi wi-icon-'+this.day.weather[0].id" ></span>
+							<span class="temperature">{{ day.main.temp }}°</span>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
